@@ -1,7 +1,9 @@
-# python-super-image-compressor
 # Python Super Image Compressor
 
-A simple Python tool to convert and compress images to AVIF.
+A strong Python tool to convert and do a massive compress images to AVIF.
+It is useful for those who need to compress textures or photos EXTREMELY for a smaller file size.
+
+> **Note:** The final format always will be AVIF (This may change in future updates).
 
 ## Features
 
@@ -32,13 +34,14 @@ pip install pyvips
 ```
 
 > **Note:** On Windows, libvips must also be installed and added to the PATH.
+            On Android, libvips must also be installed with Termux. 
 
 ## Usage
 
 Run the program:
 
 ```bash
-python image_smasher.py
+python main_gui.py
 ```
 
 Then enter the folder containing your images and follow the prompts.

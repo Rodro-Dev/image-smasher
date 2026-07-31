@@ -1,0 +1,69 @@
+import customtkinter as ctk
+from image_smasher import compress, size169
+from utils import dir_correct, get_unsuported_files
+
+main = ctk.CTk()
+
+main.title("Image Smasher")
+main.geometry("800x600")
+icon_path = "assets/icon.ico"
+main.iconbitmap(icon_path,icon_path)
+
+ctk.set_appearance_mode('dark')
+ctk.set_default_color_theme("dark-blue")
+
+label1 = ctk.CTkLabel(main,text_color="white",
+                      border_color="white",
+                      text="Smash the images of your directory",
+                      font=("Arial",16,"bold"))
+label1.pack(pady=10)
+
+path_entry = ctk.CTkEntry(main,220, placeholder_text="Put here the path")
+path_entry.pack(pady=18)
+
+verify_b = ctk.CTkButton(main, text="Verify Path", command=lambda: verify())
+verify_b.pack(pady=20)
+
+switch169 = ctk.CTkSwitch(main, text="Ask for resize 16:9 images", variable=size169)
+switch169.pack()
+
+llusf= []
+def do_compress(path:str):
+    compress(path)
+    yi = 80
+    for f in get_unsuported_files():
+        lbl = ctk.CTkLabel(main, text=f,height=0, font=("Arial", 14))
+        lbl.place(y=yi, x=15, anchor="w")
+        yi += 15
+        llusf.append(lbl)
+    lbus = ctk.CTkLabel(main,text_color="red",
+                        text="UNSUPPORTED FILES:",
+                        font=("Times New Roman", 16, "bold")
+                        )
+    lbus.place(x=10, y=50, anchor="w")
+
+lb_error_path = ctk.CTkLabel(main,
+                             text="ERROR: Path not found",
+                             text_color="red",
+                             font=("Times New Roman", 12, "bold")
+                             )
+def hide_lbep():
+    lb_error_path.pack_forget()
+compress_b = None
+def verify():
+    global compress_b
+
+    if dir_correct(path_entry.get()):
+        if compress_b is None:
+            compress_b = ctk.CTkButton(
+                main,
+                text="Compress",
+                command=lambda: do_compress(path_entry.get())
+            )
+            compress_b.pack(pady=8)
+    else:
+        path_entry.delete(0, "end")
+        lb_error_path.pack()
+        main.after(3000, hide_lbep)
+
+main.mainloop()
