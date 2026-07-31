@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from image_smasher import compress, size169
 from utils import dir_correct, get_unsuported_files
+import sys
 
 main = ctk.CTk()
 
@@ -65,5 +66,10 @@ def verify():
         path_entry.delete(0, "end")
         lb_error_path.pack()
         main.after(3000, hide_lbep)
+
+def close_app():
+    main.destroy()
+    sys.exit()
+main.protocol("WM_DELETE_WINDOW", close_app)
 
 main.mainloop()
