@@ -1,14 +1,23 @@
 import customtkinter as ctk
 from image_smasher import compress, size169
 import utils
+import os
 import sys
+
+def resource_path(relative_path):
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    return os.path.join(base_path, relative_path)
 
 main = ctk.CTk()
 
 main.title("Image Smasher")
 main.geometry("800x600")
 icon_path = "assets/icon.ico"
-main.iconbitmap(icon_path,icon_path)
+main.iconbitmap(resource_path(icon_path))
 
 ctk.set_appearance_mode('dark')
 ctk.set_default_color_theme("dark-blue")
