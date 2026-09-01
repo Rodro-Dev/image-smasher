@@ -36,21 +36,23 @@ verify_b.pack(pady=20)
 switch169 = ctk.CTkSwitch(main, text="Ask for resize 16:9 images", variable=size169)
 switch169.pack()
 
-llusf= []
+luf= []
 def do_compress(path:str):
     utils.selected_format = out_format.get().lower()
     compress(path)
     yi = 80
     for f in utils.get_unsuported_files():
-        lbl = ctk.CTkLabel(main, text=f,height=0, font=("Arial", 14))
-        lbl.place(y=yi, x=15, anchor="w")
-        yi += 15
-        llusf.append(lbl)
+        if f != "compressed":
+            lbl = ctk.CTkLabel(main, text=f,height=0, font=("Arial", 14))
+            lbl.place(y=yi, x=15, anchor="w")
+            yi += 15
+            luf.append(lbl)
     lbus = ctk.CTkLabel(main,text_color="red",
                         text="UNSUPPORTED FILES:",
                         font=("Times New Roman", 16, "bold")
                         )
-    lbus.place(x=10, y=50, anchor="w")
+    if len(luf) != 0:
+        lbus.place(x=10, y=50, anchor="w")
 
 lb_error_path = ctk.CTkLabel(main,
                              text="ERROR: Path not found",

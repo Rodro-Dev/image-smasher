@@ -7,13 +7,14 @@ app = ctk.CTk()
 size169 = ctk.BooleanVar(app,value=False)
 
 def compress(dir_main:str):
-    Path("compressed").mkdir(exist_ok=True)
+    outpath = Path(f"{dir_main}\compressed")
+    outpath.mkdir(exist_ok=True)
     for img in Path(dir_main).iterdir():
         try:
             if utils.is_supported(img.name):
                 iformat = utils.selected_format
                 img2 = pv.Image.new_from_file(img)
-                output = Path("compressed") / f"{img.stem}{iformat}"
+                output = outpath / f"{img.stem}{iformat}"
                 if size169.get():
                     if utils.is_169(img2.width,img2.height):
                         while True:
