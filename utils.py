@@ -2,6 +2,7 @@ from pathlib import Path
 import customtkinter as ctk
 
 types = (".avif",".tif",".jpeg",".jpg",".png",".webp",)
+selected_format = ""
 not_supported = []
 
 def dir_correct(path:str):

@@ -1,4 +1,4 @@
-# Python Super Image Compressor
+# Image Smasher
 
 A strong Python tool to convert and do a massive compress images to AVIF.
 It is useful for those who need to compress textures or photos EXTREMELY for a smaller file size.

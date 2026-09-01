@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from image_smasher import compress, size169
-from utils import dir_correct, get_unsuported_files
+import utils
 import sys
 
 main = ctk.CTk()
@@ -22,6 +22,14 @@ label1.pack(pady=10)
 path_entry = ctk.CTkEntry(main,220, placeholder_text="Put here the path")
 path_entry.pack(pady=18)
 
+label1 = ctk.CTkLabel(main,text_color="white",
+                      border_color="white",
+                      text="Select output format:",
+                      font=("Arial",14,"bold"))
+label1.place(x=580,y=80)
+out_format = ctk.CTkOptionMenu(main,values=[".AVIF",".PNG",".JPG"])
+out_format.place(x=585,y=120)
+
 verify_b = ctk.CTkButton(main, text="Verify Path", command=lambda: verify())
 verify_b.pack(pady=20)
 
@@ -30,9 +38,10 @@ switch169.pack()
 
 llusf= []
 def do_compress(path:str):
+    utils.selected_format = out_format.get().lower()
     compress(path)
     yi = 80
-    for f in get_unsuported_files():
+    for f in utils.get_unsuported_files():
         lbl = ctk.CTkLabel(main, text=f,height=0, font=("Arial", 14))
         lbl.place(y=yi, x=15, anchor="w")
         yi += 15
@@ -54,7 +63,7 @@ compress_b = None
 def verify():
     global compress_b
 
-    if dir_correct(path_entry.get()):
+    if utils.dir_correct(path_entry.get()):
         if compress_b is None:
             compress_b = ctk.CTkButton(
                 main,
