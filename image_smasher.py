@@ -14,7 +14,7 @@ def compress(dir_main:str):
             if utils.is_supported(img.name):
                 iformat = utils.selected_format
                 img2 = pv.Image.new_from_file(img)
-                output = outpath / f"{img.stem}{iformat}"
+                output = f"{outpath}\{img.stem}{iformat}"
                 if size169.get():
                     if utils.is_169(img2.width,img2.height):
                         while True:
@@ -43,12 +43,9 @@ def compress(dir_main:str):
                         img2.write_to_file(
                             str(output),
                             compression=9,
-                            filter='avg',
+                            filter='all',
                             palette=True,
-                            colours=128,
-                            dither=0.7,
-                            bitdepth=4,
-                            strip=True,
+                            bitdepth=8
                         )
                     case ".jpg":
                         img2.write_to_file(
@@ -56,7 +53,6 @@ def compress(dir_main:str):
                             Q=1,
                             optimize_coding=True,
                             interlace=True,
-                            subsample_mode=420,
                             strip=True,
                             background=[0,0,0]
                         )
