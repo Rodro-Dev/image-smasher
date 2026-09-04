@@ -4,6 +4,21 @@ import utils
 import os
 import sys
 
+if getattr(sys, "frozen", False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+LIBVIPS_BIN = os.path.join(BASE_DIR, "libvips", "bin")
+
+if os.path.isdir(LIBVIPS_BIN):
+    os.environ["PATH"] = LIBVIPS_BIN + os.pathsep + os.environ.get("PATH", "")
+
+    if hasattr(os, "add_dll_directory"):
+        os.add_dll_directory(LIBVIPS_BIN)
+
+import pyvips
+
 def resource_path(relative_path):
     if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
         base_path = sys._MEIPASS
